@@ -22,7 +22,7 @@ public class contron : MonoBehaviour {
         float a = Input.GetAxis("Horizontal");
 
         R.velocity = new Vector2(a * velocidad, R.velocity.y);
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, -Vector2.up);
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, -transform.up);
         Quaternion rot = Quaternion.identity;
         if (ray) {
             Debug.DrawRay(transform.position, -transform.up, Color.blue, 0.1f);
