@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate() {
         float x = Input.acceleration.x*4/*Input.GetAxis("Horizontal")*/;
+        
         float YS = Input.acceleration.y + 0.5f;
         float y;
         if (YS < 2.1)
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour {
         
         
     Vector2 movement = new Vector2(x, y);
+    Vector2 m1=movement.normalized;
     Jugador.velocity = movement * velocidad * Time.deltaTime;
 
     if(x!=0 || y!=0)
