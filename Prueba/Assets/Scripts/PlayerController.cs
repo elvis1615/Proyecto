@@ -1,79 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    public Text text;
-    Rigidbody2D Jugador;
-    public float velocidad;
-    public float VelocidadRotacion;
-    float respaldo;
+    PlayerScript playerScript;
+
 	// Use this for initialization
 	void Start () {
-        respaldo = velocidad;
-        Jugador = GetComponent<Rigidbody2D>();
-        text.text = "ola";
-    }
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+				keyboardInput();
 	}
 
-    void FixedUpdate() {
-        float x = Input.acceleration.x*4/*Input.GetAxis("Horizontal")*/;
-        
-        float YS = Input.acceleration.y + 0.5f;
-        float y;
-        if (YS < 2.1)
-        {
-            y = (YS) * 6 /*Input.GetAxis("Vertical")*/;
-        }
-        else 
-        {
-            y = 2.1f* 6f;
-        }
-        
-        
-    Vector2 movement = new Vector2(x, y);
-    Vector2 m1=movement.normalized;
-    Jugador.velocity = movement * velocidad * Time.deltaTime;
 
-    if(x!=0 || y!=0)
+    void keyboardInput()
     {
-        float angulo = Mathf.Atan2(-x, y) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angulo);
-    }
-    
-    }
 
-    void OnTriggerEnter2D(Collider2D other) 
-    {
-        if(other.gameObject.tag=="Correr")
+        if (Input.GetKey(KeyCode.RightArrow))
         {
-        StartCoroutine(Acelerar());
-        Destroy(other.gameObject,0.05f);
-        text.text = "ke ase";
+               playerScript.MoveRight();
+           
         }
-        
-
-        
-    }
-
-    IEnumerator Acelerar() 
-    {
-        velocidad = velocidad + 400;
-        for (int i = 0; i < 10;i++ )
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
+          
+             playerScript.MoveLeft();
             
-            if (i == 9)
-            {
-                velocidad = respaldo;
-                StopCoroutine(Acelerar());
-            }
-            yield return new WaitForSeconds(0.7f);
+        }
+        else
+        {
+              playerScript.StayIdle();
         }
 
+        // we can only jump whilst grounded
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+                playerScript.DoJump();
+    
+        }
     }
+
 }
