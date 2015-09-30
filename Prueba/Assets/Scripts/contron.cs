@@ -4,7 +4,7 @@ using System.Collections;
 public class contron : MonoBehaviour {
     Rigidbody2D R;
     public float velocidad;
-    public Transform aux;
+    //public Transform aux;
    
 
     // Use this for initialization
@@ -26,7 +26,7 @@ public class contron : MonoBehaviour {
 
         if (Input.GetMouseButton(0)) {
             R.velocity = new Vector3(velocidad, R.velocity.y,0);
-            R.AddForce(new Vector2(0,500));            
+            R.AddForce(new Vector2(0,50));            
         }
 
         R.velocity = new Vector2(a * velocidad, R.velocity.y);
